@@ -1,0 +1,27 @@
+{
+  "manifest_version": 2,
+  "name": "Audio Capture Extension",
+  "description": "Capture audio from the browser for 3 seconds",
+  "version": "1.0",
+  "permissions": [
+    "tabCapture",
+    "activeTab"
+  ],
+  "browser_action": {
+    "default_popup": "popup.html",
+    "default_title": "Record Audio"
+  },
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"]
+    }
+  ],
+  "capabilities": {
+    "audioCapture": {}
+  }
+}
