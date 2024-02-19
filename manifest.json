@@ -12,7 +12,7 @@
     "default_title": "Record Audio"
   },
   "background": {
-    "scripts": ["background.js"],
+    "scripts": ["dist/bundle.js"],
     "persistent": false
   },
   "content_scripts": [
@@ -23,5 +23,6 @@
   ],
   "capabilities": {
     "audioCapture": {}
-  }
+  },
+  "content_security_policy": "script-src 'self' 'unsafe-eval' https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd/ffmpeg-core.js;"
 }
