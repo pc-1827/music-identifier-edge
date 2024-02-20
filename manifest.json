@@ -1,6 +1,6 @@
 {
   "manifest_version": 2,
-  "name": "Audio Capture Extension",
+  "name": "Nirvana - Music Identifier",
   "description": "Capture audio from the browser for 3 seconds",
   "version": "1.0",
   "permissions": [
