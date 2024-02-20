@@ -1,12 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Audio Capture Extension</title>
-  <script src="popup.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Identifier</title>
+    <link rel="stylesheet" href="popup.css">
 </head>
 <body>
-  <button id="recordButton">Record Audio</button>
+    <div class="container">
+        <div class="logo-container">
+            <img src="public/logo_processed.jpeg" alt="Logo" class="logo" id="logo">
+            <p class="status">Identifying...</p>
+        </div>
+        <div class="songs-container">
+          <div class="songs-title">
+            <h2 class="songs-title">Songs</h2>
+            <i class="fa-solid fa-angle-up"></i>
+          </div>
+            <div class="song">
+                <img src="song1.png" alt="Song 1" class="song-logo">
+                <p class="song-name">Song 1 Name</p>
+            </div>
+            <div class="song">
+                <img src="song2.png" alt="Song 2" class="song-logo">
+                <p class="song-name">Song 2 Name</p>
+            </div>
+            <!-- Add more songs as needed -->
+        </div>
+    </div>
 </body>
 </html>
