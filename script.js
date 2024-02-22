@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', async function() {
   const songsList = document.getElementById('songsList');
   const statusText = document.getElementById('status');
 
-  await displayIdentifiedSongs();
+  displayIdentifiedSongs()
 
   logo.addEventListener('click', function() {
       // Send a message to the background script to start audio capture
@@ -16,12 +16,7 @@ document.addEventListener('DOMContentLoaded', async function() {
       statusText.textContent = 'Identifying...';
   });
 
-  chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-    if (request === 'audioCaptureComplete') {
-      logo.classList.remove('spin');
-      statusText.textContent = 'Touch to Identify'
-      songsList.classList.add('show')
-    }
+  chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
     if (request === 'noAudio') {
       statusText.textContent = "No audio is playing in the current tab"
       logo.classList.remove('spin')
@@ -30,17 +25,43 @@ document.addEventListener('DOMContentLoaded', async function() {
       }, 5000)
     }
     if (request.type === 'SHAZAM_RESULT') {
-      saveSongDetails(request);
-      displayIdentifiedSongs();
+      saveSongDetails(request, async function() {
+          displayIdentifiedSongs(); // Wait for data to be displayed
+          logo.classList.remove('spin');
+          statusText.textContent = 'Touch to Identify'
+          songsList.classList.add('show')
+      });
   }
   });
 
-//   songsList.addEventListener('click', function(event) {
-//     if (event.target.classList.contains('delete-icon')) {
-//         const songElement = event.target.closest('.song');
-//         songElement.remove();
-//     }
-// });
+  songsList.addEventListener('click', function(event) {
+    if (event.target.classList.contains('delete-icon')) {
+        // Find the closest song element containing the delete icon
+        const songElement = event.target.closest('.song');
+
+        // Get the time key of the song to delete (assuming it's stored as a data attribute)
+        const songTime = songElement.dataset.time;
+
+        // Delete the song from storage and update the song list
+        deleteSong(songTime);
+    }
+});
+
+    // Add event listener to the parent songsList container and delegate the click event to its children
+    songsList.addEventListener('click', function(event) {
+      const songElement = event.target.closest('.song');
+      if (songElement) {
+          // Extract relevant data from the clicked song element
+          const title = songElement.querySelector('.song-title').textContent;
+          const subtitle = songElement.querySelector('.song-subtitle').textContent;
+
+          // Open new HTML page with additional links
+          chrome.tabs.create({
+              url: chrome.extension.getURL(`songDetails.html?title=${encodeURIComponent(title)}&subtitle=${encodeURIComponent(subtitle)}`)
+          });
+      }
+  });
+
 
   songsTitle.addEventListener('click', function() {
       // Toggle songs list visibility
@@ -59,24 +80,51 @@ document.addEventListener('DOMContentLoaded', async function() {
       }
 
       // Function to save identified song details to Chrome storage
-      function saveSongDetails(songDetails) {
-          getStoredSongs(function(identifiedSongs) {
-              identifiedSongs.push(songDetails);
-              chrome.storage.local.set({ 'identifiedSongs': identifiedSongs });
-          });
-      }
+      function saveSongDetails(songDetails, callback) {
+        getStoredSongs(function(identifiedSongs) {
+            identifiedSongs.unshift(songDetails);
+            chrome.storage.local.set({ 'identifiedSongs': identifiedSongs }, function() {
+                if (typeof callback === 'function') {
+                    callback(); // Call the callback function after saving the data
+                }
+            });
+        });
+    }
+
+    function deleteSong(songTime) {
+      getStoredSongs(function(identifiedSongs) {
+          // Find the index of the song to delete based on its time key
+          const indexToDelete = identifiedSongs.findIndex(song => song.data.time == songTime);
+
+          if (indexToDelete !== -1) {
+              // Remove the song from the identifiedSongs array
+              identifiedSongs.splice(indexToDelete, 1);
+
+              // Save the updated identifiedSongs array to storage
+              chrome.storage.local.set({ 'identifiedSongs': identifiedSongs }, function() {
+                  console.log('Song deleted successfully:', identifiedSongs);
+                  // Display the updated song list
+                  displayIdentifiedSongs();
+              });
+          } else {
+              console.log('Song not found in storage:', songTime);
+              statusText.innerText = songTime
+          }
+      });
+  }
 
       function displayIdentifiedSongs() {
-        return new Promise((resolve, reject) => {
             getStoredSongs(function(identifiedSongs) {
-                const songsList = document.getElementById('songsList');
                 songsList.innerHTML = ''; // Clear previous list
 
                 identifiedSongs.forEach(function(song) {
                     // Create elements for the song
-                    const { coverArt, title, subtitle } = song.data;
+                    const { coverArt, title, subtitle, time } = song.data;
                     const songElement = document.createElement('div');
                     songElement.classList.add('song');
+                    songElement.setAttribute('id', 'song')
+
+                    songElement.dataset.time = time;
 
                     const coverArtImg = document.createElement('img');
                     coverArtImg.src = coverArt;
@@ -95,7 +143,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     songSubtitle.classList.add('song-subtitle');
 
                     const identificationData = document.createElement('p');
-                    identificationData.textContent = 'Identified on: ' + new Date().toLocaleString();
+                    identificationData.textContent = 'Identified on: ' + time;
                     identificationData.classList.add('identification-data');
 
                     const deleteIcon = document.createElement('i');
@@ -112,9 +160,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                     // Append the song container to the song list container
                     songsList.appendChild(songElement);
                 });
-                resolve(); // Resolve the promise after displaying songs
-            });
         });
     }
-
 });
