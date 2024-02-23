@@ -18,7 +18,7 @@ body {
 
 .songs-container {
     background-color: #171717;
-    padding: 5px 10px;
+    padding: 0px 10px;
 }
 
 .logo {
@@ -37,12 +37,14 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    font-size: larger;
 }
 
 .song {
     display: flex;
     align-items: center;
-    margin-top: 10px;
+    cursor: pointer;
+    border-top: 1px solid rgba(211, 211, 211, 0.289);;
 }
 
 .song-logo {
@@ -86,18 +88,32 @@ body {
 
 .songs-list {
     height: 0px;
+    padding: 0px;
     overflow: auto;
     opacity: 0;
     transition:
         height 0.5s ease,
         opacity 0.5s ease;
+    scrollbar-width: thin;
+    scrollbar-color: #525252 #171717;
 }
 
 .songs-list.show {
-    height: 300px;
+    height: 308px;
     opacity: 1;
+    padding: 0px 10px;
 }
 
+.github{
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px solid rgba(211, 211, 211, 0.289);
+    align-items: center;
+}
+
+.github-link{
+    color: white;
+}
 
 .rotate {
     transform: rotate(180deg);
