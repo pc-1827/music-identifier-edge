@@ -4,44 +4,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Song Details</title>
+    <link rel="stylesheet" href="details.css">
 </head>
 <body>
-    <h1>Song Details</h1>
-    <h2 id="songTitle"></h2>
-    <h3 id="songSubtitle"></h3>
-    <div id="additionalLinks">
-        <!-- Additional links will be dynamically added here -->
+    <div class="container">
+        <p class="identifier">Identified by Nirvana - Music Identifier</p>
+        <div class="song-info">
+            <div class="song-image">
+                <img src="" alt="Covert Art Image" id="song-image">
+            </div>
+            <div class="song-text">
+                <p id="songTitle"></p>
+                <p id="songSubtitle"></p>
+            </div>
+        </div>
+        <div class="external-links">
+            <a class="link-box" id="appleMusicLink" href="#">
+                <div class="link-box-image">
+                    <img src="logo/apple-logo.png" alt="Apple Music Logo">
+                </div>
+                <p>Apple Music</p>
+            </a>
+            <a class="link-box" id="spotifyLink" href="#">
+                <div class="link-box-image">
+                    <img src="logo/spotify.png" alt="Spotify Logo">
+                </div>
+                <p>Spotify</p>
+            </a>
+            <a class="link-box" id="youtubeLink" href="#">
+                <div class="link-box-image">
+                    <img src="logo/youtube.png" alt="YouTube Logo">
+                </div>
+                <p>YouTube</p>
+            </a>
+        </div>
+        <p class="identifier">Developed by pc-1827</p>
     </div>
-
-    <script>
-        // Retrieve data from URL parameters
-        const params = new URLSearchParams(window.location.search);
-        const title = params.get('title');
-        const subtitle = params.get('subtitle');
-
-        // Display song details
-        document.getElementById('songTitle').textContent = title;
-        document.getElementById('songSubtitle').textContent = subtitle;
-
-        // Add additional links (replace placeholders with actual links)
-        const additionalLinksDiv = document.getElementById('additionalLinks');
-        // Example links (replace with actual links)
-        const youtubeLink = document.createElement('a');
-        youtubeLink.href = 'https://www.youtube.com/';
-        youtubeLink.textContent = 'YouTube';
-
-        const deezerLink = document.createElement('a');
-        deezerLink.href = 'https://www.deezer.com/';
-        deezerLink.textContent = 'Deezer';
-
-        const applemusicLink = document.createElement('a');
-        applemusicLink.href = 'https://music.apple.com/';
-        applemusicLink.textContent = 'Apple Music';
-
-        // Append links to additionalLinksDiv
-        additionalLinksDiv.appendChild(youtubeLink);
-        additionalLinksDiv.appendChild(deezerLink);
-        additionalLinksDiv.appendChild(applemusicLink);
-    </script>
+    <script src="songs.js"></script>
 </body>
 </html>
