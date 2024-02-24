@@ -1,15 +1,18 @@
 {
   "manifest_version": 2,
-  "name": "Nirvana - Music Identifier",
-  "description": "Capture audio from the browser for 3 seconds",
+  "name": "Nirvana - Music Identifer",
+  "description": "Identifies music playing in your current tab",
   "version": "1.0",
   "permissions": [
     "tabCapture",
-    "activeTab"
+    "activeTab",
+    "storage",
+    "unlimitedStorage"
   ],
   "browser_action": {
+    "default_icon": "public/logo_processed.jpeg",
     "default_popup": "popup.html",
-    "default_title": "Record Audio"
+    "default_title": "Identify the Music"
   },
   "background": {
     "scripts": ["dist/bundle.js"],
