@@ -10,7 +10,10 @@ document.addEventListener('DOMContentLoaded', async function() {
 
     logo.addEventListener('click', function() {
         // Send a message to the background script to start audio capture
-        chrome.runtime.sendMessage('recordAudio');
+        chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
+          const tab = tabs[0];
+          chrome.runtime.sendMessage({ type: 'recordAudio', tab: tab });
+        });
 
         // Start spinning the logo
         logo.classList.add('spin');
@@ -42,30 +45,29 @@ document.addEventListener('DOMContentLoaded', async function() {
       }
     });
 
-      // Add event listener to the parent songsList container and delegate the click event to its children
-      songsList.addEventListener('click', function(event) {
-          const deleteIcon = event.target.closest('.delete-icon');
-          if (deleteIcon) {
-              // Delete the song from storage and update the song list
-              const songElement = deleteIcon.closest('.song');
-              const songTime = songElement.dataset.time;
-              deleteSong(songTime);
-          } else {
-              const songElement = event.target.closest('.song');
-              if (songElement) {
-                  // Extract relevant data from the clicked song element
+    songsList.addEventListener('click', function(event) {
+      const deleteIcon = event.target.closest('.delete-icon');
+      if (deleteIcon) {
+          // Delete the song from storage and update the song list
+          const songElement = deleteIcon.closest('.song');
+          const songTime = songElement.dataset.time;
+          deleteSong(songTime);
+      } else {
+          const songElement = event.target.closest('.song');
+          if (songElement) {
+              chrome.storage.local.get('identifiedSongs', function(data) {
+                  const identifiedSongs = data.identifiedSongs || [];
                   const title = songElement.querySelector('.song-title').textContent;
                   const subtitle = songElement.querySelector('.song-subtitle').textContent;
 
-                  // Open new HTML page with additional links
-                  chrome.tabs.create({
-                      url: chrome.extension.getURL(`songDetails.html?title=${encodeURIComponent(title)}&subtitle=${encodeURIComponent(subtitle)}`)
-                  });
+                  const song = identifiedSongs.find(song => song.data.title === title && song.data.subtitle === subtitle);
 
-              }
+                  const youtubeurl = song.data.youtubeurl;
+                  window.open(youtubeurl, '_blank')
+              });
           }
-      });
-
+      }
+  });
 
     songsTitle.addEventListener('click', function() {
         // Toggle songs list visibility
