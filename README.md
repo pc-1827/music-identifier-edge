@@ -1,14 +1,14 @@
 # Nirvana - Music Identifier
 
-Nirvana is a music identifier extension designed to help users quickly identify songs playing around them. With Nirvana, users can easily recognize songs playing on various platforms and access detailed information about the identified tracks.
+[Nirvana](https://microsoftedge.microsoft.com/addons/detail/nirvana-music-identifer/ijmpdnfcdbejgbmdoooebfkafplebake) is a music identifier extension designed to help users quickly identify songs playing around them. With [Nirvana](https://microsoftedge.microsoft.com/addons/detail/nirvana-music-identifer/ijmpdnfcdbejgbmdoooebfkafplebake), users can easily recognize songs playing on various platforms and access detailed information about the identified tracks.
 
 ## Overview
 
-Have you ever found yourself in a situation where you hear a catchy tune but can't quite place the song? Nirvana is here to rescue you! Simply activate the extension, let it listen to the music, and get instant details about the track, including its title, artist, album, and more.
+Have you ever found yourself in a situation where you hear a catchy tune but can't quite place the song? [Nirvana](https://microsoftedge.microsoft.com/addons/detail/nirvana-music-identifer/ijmpdnfcdbejgbmdoooebfkafplebake) is here to rescue you! Simply activate the extension, let it listen to the music, and get instant details about the track, including its title, artist, album, and more.
 
 ## Availability
 
-Nirvana - Music Identifier is available on Microsoft Edge Addons. You can easily install it from the Microsoft Edge Addons store and start using it right away.
+[Nirvana - Music Identifier](https://microsoftedge.microsoft.com/addons/detail/nirvana-music-identifer/ijmpdnfcdbejgbmdoooebfkafplebake) is available on Microsoft Edge Addons. You can easily install it from the Microsoft Edge Addons store and start using it right away.
 
 ### How to Use the Extension
 
@@ -20,10 +20,6 @@ Once the song is identified, it will be displayed under the "Identified Songs" s
 
 ![Popup_full](images/Popup_full.png)
 
-### Song Details Page
+Clicking on a recognized song will open a new tab to the official music video on Youtube.
 
-Clicking on a recognized song will open a new tab with links to various platforms such as Apple Music, Spotify, and YouTube, providing you with easy access to the music.
-
-![Song Details](images/songDetails.png)
-
-Stay tuned for updates and new features! If you enjoy using the extension, please consider leaving a review on Microsoft Edge Addons and starring the GitHub repository. Your feedback and support are greatly appreciated.
+Stay tuned for updates and new features! If you enjoy using the extension, please consider leaving a review on [Microsoft Edge Addons](https://microsoftedge.microsoft.com/addons/detail/nirvana-music-identifer/ijmpdnfcdbejgbmdoooebfkafplebake) and starring the GitHub repository. Your feedback and support are greatly appreciated.
